@@ -39,6 +39,7 @@ XDVI	= xdvi -gamma 4
 DVIPS	= dvips
 DVIPDF  = dvipdft
 PS2PDF  = ps2pdf
+PDF2TXT = pdftotext
 L2H	= latex2html
 GH	= evince
 
@@ -102,6 +103,11 @@ define manconf
 endef
 
 all 	: $(PDF)
+
+wc		: $(PDF)
+	@for i in $(PDF) ; do \
+		echo "$$i: `$(PDF2TXT) $$i - | grep -v "\. \. \." | grep -v "^.$$" | wc -w`"; \
+	done
 
 .PHONY	: all show clean ps pdf showps veryclean
 
